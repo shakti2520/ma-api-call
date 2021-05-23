@@ -4,11 +4,13 @@ from flask_restful import Api, Resource, abort, reqparse, fields, marshal_with
 from pickle import load
 import json
 import numpy as np
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
 api = Api(app)
 
+cors = CORS(app,  resources={r"/predict": {"origins": "*"}})
 
 ################################################ Key Table Class ###########################
 
@@ -84,6 +86,7 @@ class Model(Resource):
                       "request URL": request.url,
                       "prediction": response[0]}
             result = json.dumps(result, cls=NumpyEncoder)
+            print("\n\n",result)
             return result, 200
         except Exception as ex:
             result = {"status": 400,
@@ -115,6 +118,7 @@ def Home():
               <p>For further information refer to the documnentation.</p>
               </div>
               </div>'''
+
 
 
 if __name__ == "__main__":

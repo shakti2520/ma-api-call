@@ -10,7 +10,7 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 api = Api(app)
 
-cors = CORS(app,  resources={r"/predict": {"origins": "*"}})
+cors = CORS(app)
 
 ################################################ Key Table Class ###########################
 
@@ -86,7 +86,6 @@ class Model(Resource):
                       "request URL": request.url,
                       "prediction": response[0]}
             result = json.dumps(result, cls=NumpyEncoder)
-            print("\n\n",result)
             return result, 200
         except Exception as ex:
             result = {"status": 400,
